@@ -2,6 +2,13 @@
 
 iOS client for kanpai and other AI utils
 
+you need to make `lib/secrets.dart`:
+
+```dart
+const openAiApiKey = "sk-...";
+const openAiOrgId = "org-...";
+```
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
