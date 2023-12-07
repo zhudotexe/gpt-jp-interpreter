@@ -50,6 +50,6 @@ class OpenAI {
 
     // yeet
     Response response = await dio.post('/chat/completions', data: body);
-    return response.data['text'];
+    return response.data['choices'][0]['message']['content'];
   }
 }

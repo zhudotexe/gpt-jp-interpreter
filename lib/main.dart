@@ -125,19 +125,33 @@ class _VoicePageState extends State<VoicePage> {
   }
 
   // ==== flutter ====
-  Widget buildLanguage(int lang) {
+  Widget buildLanguageInteractable(int lang) {
     switch (state) {
       case WorkState.idle:
-        return GestureDetector(
-          onTapDown: (_) => startRecording(EN),
-          onTapUp: (_) => stopRecording(),
-          child: const Icon(CupertinoIcons.mic_fill, size: 48),
-        );
-      case WorkState.recording:
         return const Icon(CupertinoIcons.mic_fill, size: 48);
+      case WorkState.recording:
+        return const Icon(CupertinoIcons.mic_fill,
+            size: 48, color: Colors.grey);
       case WorkState.busy:
-        return const CupertinoActivityIndicator();
+        return const CupertinoActivityIndicator(radius: 24);
     }
+  }
+
+  Widget buildLanguage(int lang) {
+    return Container(
+      height: 353,
+      margin: const EdgeInsets.all(20),
+      child: Column(children: [
+        Text(transcriptions[lang]),
+        const Spacer(),
+        GestureDetector(
+          onTapDown: (_) => startRecording(lang),
+          onTapUp: (_) => stopRecording(),
+          // onLongPressUp: stopRecording,
+          child: buildLanguageInteractable(lang),
+        ),
+      ]),
+    );
   }
 
   @override
@@ -148,26 +162,23 @@ class _VoicePageState extends State<VoicePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          // --- japanese ---
-          Transform.flip(
-            flipY: true,
-            child: Column(children: [
-              Text(transcriptions[JP]),
-              buildLanguage(JP),
-            ]),
-          ),
-          const Divider(),
-          // --- english ---
-          Column(
-            children: [
-              Text(transcriptions[EN]),
-              buildLanguage(EN),
-            ],
-          ),
-        ],
+    return CupertinoPageScaffold(
+      child: Center(
+        child: Column(
+          children: [
+            // spacer
+            const SizedBox(height: 50),
+            // --- japanese ---
+            Transform.flip(
+              flipX: true,
+              flipY: true,
+              child: buildLanguage(JP),
+            ),
+            const Divider(),
+            // --- english ---
+            buildLanguage(EN)
+          ],
+        ),
       ),
     );
   }

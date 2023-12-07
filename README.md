@@ -9,6 +9,16 @@ const openAiApiKey = "sk-...";
 const openAiOrgId = "org-...";
 ```
 
+build adhoc ipa:
+
+```shell
+flutter build ipa --export-method ad-hoc
+```
+
+rename the ipa to zip and unzip
+
+then XCode -> Window -> Devices & Simulators -> phone -> Add the .app file
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
